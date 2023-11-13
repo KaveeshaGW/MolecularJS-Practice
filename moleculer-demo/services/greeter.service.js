@@ -19,11 +19,15 @@ module.exports = {
 	/**
 	 * Dependencies
 	 */
+	//Here we put services that greeter service depends on
+	//during boot time, molecular will first start the helper service
 	dependencies: [],
 
 	/**
 	 * Actions
 	 */
+	//These are public
+	//other services can call them
 	actions: {
 
 		/**
@@ -31,14 +35,17 @@ module.exports = {
 		 *
 		 * @returns
 		 */
-		hello: {
-			rest: {
-				method: "GET",
-				path: "/hello"
-			},
-			async handler() {
-				return "Hello Moleculer";
-			}
+		
+		async hello(ctx) {
+			const payload = 'Hello from greeter';
+
+			//action calls are asynchronous
+			//so we make hello async
+			const number = await ctx.call("helper.random");
+
+			ctx.emit("hello.called", { payload, number});
+			
+			return { payload, number};
 		},
 
 		/**
@@ -68,6 +75,7 @@ module.exports = {
 	/**
 	 * Methods
 	 */
+	//private functions that are only accessible within greeter scope
 	methods: {
 
 	},

@@ -1,4 +1,4 @@
-"use strict";
+	"use strict";
 
 const ApiGateway = require("moleculer-web");
 
@@ -30,8 +30,13 @@ module.exports = {
 				path: "/api",
 
 				whitelist: [
+					//any action in any service can be accessed under "/api" url
 					"**"
 				],
+
+				//localhost:3000/api/foo/bar
+				//map foo to a service name
+				//bar to an action name
 
 				// Route-level Express middlewares. More info: https://moleculer.services/docs/0.14/moleculer-web.html#Middlewares
 				use: [],
